@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Sorting Service</title>
+  </head>
+
+  <body>
+    <main id="container">
+      <h1>Sorting-Service Test</h1>
+
+      <p>Click the button below to get your house.</p>
+      <button id="getHouse">Get House</button>
+      <p id="house"></p>
+      <p id="housemates"></p>
+    </main>
+    <script>
+      const getHouseElement = document.getElementById("getHouse");
+      const houseElement = document.getElementById("house");
+      const getDetailsElement = document.getElementById("getDetails");
+      const housematesElement = document.getElementById("housemates");
+      const getSortingURL = "https://lp4o7ya0sk.execute-api.eu-central-1.amazonaws.com/dev/house";
+
+      getHouseElement.onclick = () => {
+        fetch(getSortingURL)
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data.randomHouse, data.housemates);
+            houseElement.innerText = "Your House is: " + data.randomHouse;
+            housematesElement.innerText = "Your housates are: ";
+            for (const housemate of data.housemates) {
+              housematesElement.append(housemate.name + ", ");
+            }
+            // housematesElement.innerText = data.housemates;
+          });
+      };
+    </script>
+  </body>
+</html>
